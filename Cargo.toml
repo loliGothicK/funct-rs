@@ -1,0 +1,14 @@
+[package]
+name = "functional"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+edition = "2021"
+crate-type = ["lib"]
+bench = false
+
+[workspace]
+members = [
+    "control",
+]
