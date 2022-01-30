@@ -1,5 +1,5 @@
 // Type Hall
-pub trait Generic1<T> {
+pub trait Generic1<'r, T> {
     type Type = T;
-    type Rebind<U>;
+    type Rebind<U: 'r>;
 }
