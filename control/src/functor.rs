@@ -16,11 +16,14 @@ impl<'r, T> Generic1<'r, T> for &'r [T] {
     type Type = &'r T;
     type Rebind<U: 'r> = Vec<U>;
 }
+impl<'r, T> Generic1<'r, T> for Vec<T> {
+    type Type = T;
+    type Rebind<U: 'r> = Vec<U>;
+}
 
 // Functor Hall implementation for &[T]
 impl<'r, T: 'r> Functor<'r, T> for &'r [T] {
-    fn fmap<U: 'r>(self, f: impl Fn(&'r T) -> U) -> Self::Rebind<U>
-    {
+    fn fmap<U: 'r>(self, f: impl Fn(&'r T) -> U) -> Self::Rebind<U> {
         self.iter().map(f).collect::<Vec<_>>()
     }
 }
@@ -33,8 +36,7 @@ impl<'r, T: 'r> Generic1<'r, T> for Option<T> {
 
 // Functor Hall implementation for Option<T>
 impl<'r, T: 'r> Functor<'r, T> for Option<T> {
-    fn fmap<U: 'r>(self, f: impl Fn(T) -> U) -> Self::Rebind<U>
-    {
+    fn fmap<U: 'r>(self, f: impl Fn(T) -> U) -> Self::Rebind<U> {
         self.map(|x| f(x))
     }
 }
